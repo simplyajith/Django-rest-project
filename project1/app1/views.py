@@ -34,5 +34,28 @@ class EmployeesView(APIView):
             return Response(temp, status=status.HTTP_201_CREATED)
         return Response(employeeSerializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self,request):
-        pass
+class EmployeeDetailView(APIView):
+    def get_object(self, pk):
+        try:
+            return Employees.objects.get(pk=pk)
+        except:
+            raise status.HTTP_400_BAD_REQUEST
+
+    def get(self,request,pk):
+        print("*" * 1000)
+        print(request)
+        print(pk)
+        employee = self.get_object(pk)
+        serializer = EmployessSerializer(employee)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        print("*"*100)
+        print(request.data)
+        print(pk)
+        employee = self.get_object(pk)
+        serializer = EmployessSerializer(employee, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
