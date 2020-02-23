@@ -1,7 +1,7 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 
-class AnimalTestCase(TestCase):
+class EmployeesTestCase(TestCase):
     client = APIClient()
     def test_post(self):
         data = {
