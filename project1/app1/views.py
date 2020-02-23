@@ -43,7 +43,7 @@ class EmployeeDetailView(APIView):
 
     def get(self,request,pk):
         print("*" * 1000)
-        print(request)
+        print(request.data)
         print(pk)
         employee = self.get_object(pk)
         serializer = EmployessSerializer(employee)
